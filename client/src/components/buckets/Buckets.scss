@@ -7,6 +7,18 @@
     background-color: $primary;
     overflow-y: scroll;
   }
+  &-menu {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    display: none;
+    height: 4rem;
+    width: 4rem;
+    border: 1px solid $primary;
+    fill: $primary;
+    padding: 1rem;
+    cursor: pointer;
+  }
   &-title {
     color: $black;
     font-size: 3rem;
@@ -54,5 +66,27 @@
     cursor: pointer;
     padding: 0 1rem;
     margin: 1rem;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .buckets {
+    &-wrapper {
+      position: absolute;
+      left: 0;
+      height: 100%;
+      width: 25rem;
+      transition: all 500ms ease-in-out;
+      &-hidden {
+        transform: translateX(-25rem);
+      }
+    }
+    &-menu {
+      display: block;
+      transition: all 500ms ease-in-out;
+      &-right {
+        transform: translateX(25rem);
+      }
+    }
   }
 }

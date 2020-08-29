@@ -6,7 +6,6 @@
   }
   &-input_wrapper {
     display: flex;
-    width: 100%;
     margin: 1rem;
     justify-content: center;
     flex-wrap: wrap;
@@ -25,5 +24,13 @@
   }
   &-button {
     padding: 1rem;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .todo_list {
+    &-wrapper {
+      margin-top: 7.5rem;
+    }
   }
 }
