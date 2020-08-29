@@ -15,6 +15,7 @@ flask-sqlalchemy = "*"
 sqlalchemy = "*"
 gunicorn = "*"
 python-dotenv = "*"
+mysqlclient = "*"
 
 [requires]
 python_version = "3.7"
