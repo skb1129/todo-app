@@ -1,7 +1,7 @@
-from flask import abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, Text, Boolean
+from sqlalchemy import Column, Integer, Text, Boolean, String, ForeignKey
 from sqlalchemy.exc import IntegrityError
+from werkzeug.exceptions import BadRequest
 
 db = SQLAlchemy()
 
@@ -32,34 +32,85 @@ class TodoItem(db.Model):
     """
     Persistent To-Do item model, extends the base SQLAlchemy model
     """
-    __tablename__ = "todo_items"
+    __tablename__ = "items"
     id = Column(Integer, primary_key=True, autoincrement=True)
     description = Column(Text, nullable=False)
     done = Column(Boolean, nullable=False)
+    bucket = Column(String(24), ForeignKey('buckets.name'), nullable=True)
+
+    @staticmethod
+    def get(todo_id):
+        todo = TodoItem.query.get(todo_id)
+        if not todo:
+            raise BadRequest(f"Item with id:{todo_id} not found.")
+        return todo
 
     def insert(self):
         try:
             db.session.add(self)
             db.session.commit()
-        except IntegrityError as exception:
-            return abort(jsonify(code="BAD_REQUEST", message="Unable to add todo item."), 400)
+        except IntegrityError:
+            raise BadRequest("Unable to add todo item.")
 
     def update(self):
         try:
             db.session.commit()
-        except IntegrityError as exception:
-            return abort(jsonify(code="BAD_REQUEST", message="Unable to update todo item."), 400)
+        except IntegrityError:
+            raise BadRequest("Unable to update todo item.")
 
     def delete(self):
         try:
             db.session.delete(self)
             db.session.commit()
-        except IntegrityError as exception:
-            return abort(jsonify(code="BAD_REQUEST", message="Unable to delete todo item."), 400)
+        except IntegrityError:
+            raise BadRequest("Unable to delete todo item.")
 
     def dictionary(self):
         return {
             "id": self.id,
             "description": self.description,
             "done": self.done,
+            "bucket": self.bucket,
+        }
+
+
+class TodoBucket(db.Model):
+    """
+    Persistent To-Do bucket model, extends the base SQLAlchemy model
+    """
+    __tablename__ = "buckets"
+    name = Column(String(24), primary_key=True)
+    todos = db.relationship(TodoItem, backref="buckets")
+
+    @staticmethod
+    def get(name):
+        bucket = TodoBucket.query.get(name)
+        if not bucket:
+            raise BadRequest(f"Bucket with name:{name} not found.")
+        return bucket
+
+    def insert(self):
+        try:
+            db.session.add(self)
+            db.session.commit()
+        except IntegrityError:
+            raise BadRequest("Unable to create todo bucket.")
+
+    def update(self):
+        try:
+            db.session.commit()
+        except IntegrityError:
+            raise BadRequest("Unable to update todo bucket.")
+
+    def delete(self):
+        try:
+            db.session.delete(self)
+            db.session.commit()
+        except IntegrityError:
+            raise BadRequest("Unable to delete todo bucket.")
+
+    def dictionary(self):
+        return {
+            "name": self.name,
+            "todos": [todo.dictionary() for todo in self.todos],
         }
