@@ -1,0 +1,13 @@
+.todo {
+  &-wrapper {
+    display: flex;
+    margin: 1rem;
+  }
+  &-check {
+    height: 2rem;
+    width: 2rem;
+  }
+  &-text {
+    font-size: 1.6rem;
+  }
+}

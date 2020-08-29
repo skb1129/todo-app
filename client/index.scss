@@ -1,4 +1,4 @@
-@import "./src/styles/colors";
+@import "src/styles/colors";
 
 html {
   font-size: 10px;
@@ -10,7 +10,6 @@ html {
 
 body {
   margin: 0;
-  background-color: $background;
 }
 
 input,

@@ -1,0 +1,22 @@
+@import "src/styles/colors";
+
+.buckets {
+  &-wrapper {
+    flex: 25rem 0 0;
+    background-color: $primary;
+    overflow-y: scroll;
+  }
+  &-button {
+    display: block;
+    font-size: 1.6rem;
+    padding: 1rem;
+    margin: 1rem;
+    color: $black;
+    text-decoration-line: none;
+    cursor: pointer;
+    &-active,
+    &:hover {
+      background-color: $highlight;
+    }
+  }
+}
