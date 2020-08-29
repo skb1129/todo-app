@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import classNames from "classnames";
 
 import { useTodo } from "../../contexts/TodoContext";
 import { TodoItem } from "../../models";
@@ -13,6 +14,7 @@ function Todo({ todo }: Props) {
     wrapper: "todo-wrapper",
     check: "todo-check",
     text: "todo-text",
+    textDone: "todo-text-done",
   };
   const { updateTodo } = useTodo();
   const onChange = useCallback(
@@ -22,7 +24,7 @@ function Todo({ todo }: Props) {
   return (
     <div className={classes.wrapper}>
       <input className={classes.check} type="checkbox" checked={todo.done} onChange={onChange} />
-      <p className={classes.text}>{todo.description}</p>
+      <p className={classNames(classes.text, todo.done ? classes.textDone : "")}>{todo.description}</p>
     </div>
   );
 }

@@ -1,5 +1,6 @@
-import React, { useCallback, useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useCallback, useMemo, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import classNames from "classnames";
 
 import { useTodo } from "../../contexts/TodoContext";
 
@@ -8,6 +9,7 @@ import "./Buckets.scss";
 function Buckets() {
   const classes = {
     wrapper: "buckets-wrapper",
+    title: "buckets-title",
     inputWrapper: "buckets-input_wrapper",
     input: "buckets-input",
     button: "buckets-button",
@@ -16,6 +18,8 @@ function Buckets() {
   };
   const [value, setValue] = useState("");
   const { buckets, addBucket } = useTodo();
+  const { search } = useLocation();
+  const bucketName = useMemo(() => new URLSearchParams(search).get("bucket"), [search]);
 
   const createTodo = useCallback(() => {
     addBucket(value);
@@ -32,10 +36,13 @@ function Buckets() {
 
   return (
     <div className={classes.wrapper}>
+      <h1 className={classes.title}>To-Do App</h1>
       <div className={classes.inputWrapper}>
         <input
           className={classes.input}
           type="text"
+          placeholder="Bucket name"
+          maxLength={24}
           value={value}
           onChange={({ target }) => setValue(target.value)}
           onKeyPress={onKeyPress}
@@ -44,19 +51,17 @@ function Buckets() {
           Create Bucket
         </button>
       </div>
-      <NavLink className={classes.button} activeClassName={classes.buttonActive} exact to="/">
+      <Link className={classNames(classes.button, bucketName ? "" : classes.buttonActive)} to="/">
         All
-      </NavLink>
+      </Link>
       {buckets.map((bucket) => (
-        <NavLink
-          className={classes.button}
-          activeClassName={classes.buttonActive}
-          exact
+        <Link
+          className={classNames(classes.button, bucketName !== bucket.name ? "" : classes.buttonActive)}
           key={bucket.name}
           to={{ pathname: "/", search: `?bucket=${bucket.name}` }}
         >
           {bucket.name}
-        </NavLink>
+        </Link>
       ))}
     </div>
   );

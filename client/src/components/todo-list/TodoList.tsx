@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useLocation } from "react-router";
 
 import { useTodo } from "../../contexts/TodoContext";
@@ -17,12 +17,12 @@ function TodoList() {
   const [value, setValue] = useState("");
   const { todos, addTodo } = useTodo();
   const { search } = useLocation();
-  const bucket = new URLSearchParams(search).get("bucket");
+  const bucket = useMemo(() => new URLSearchParams(search).get("bucket"), [search]);
 
   const createTodo = useCallback(() => {
-    addTodo(value);
+    addTodo(value, bucket);
     setValue("");
-  }, [value, setValue, addTodo]);
+  }, [value, setValue, addTodo, bucket]);
 
   const onKeyPress = useCallback(
     (event) => {
@@ -38,19 +38,22 @@ function TodoList() {
         <input
           className={classes.input}
           type="text"
+          placeholder="To-Do description"
           value={value}
           onChange={({ target }) => setValue(target.value)}
           onKeyPress={onKeyPress}
         />
         <button className={classes.button} onClick={createTodo}>
-          Create To-do
+          Create To-Do {bucket ? `in ${bucket}` : ""}
         </button>
       </div>
       <div className={classes.items}>
-        {todos.map((todo) => {
-          if (bucket && todo.bucket !== bucket) return;
-          return <Todo key={todo.id} todo={todo} />;
-        })}
+        <div>
+          {todos.map((todo) => {
+            if (bucket && todo.bucket !== bucket) return;
+            return <Todo key={todo.id} todo={todo} />;
+          })}
+        </div>
       </div>
     </div>
   );

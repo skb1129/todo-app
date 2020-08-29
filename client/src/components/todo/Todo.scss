@@ -1,13 +1,23 @@
+@import "src/styles/colors";
+
 .todo {
   &-wrapper {
     display: flex;
-    margin: 1rem;
+    margin: 2rem;
+    padding: 1rem;
+    align-items: center;
+    border: 1px solid $primary;
   }
   &-check {
-    height: 2rem;
-    width: 2rem;
+    height: 3rem;
+    width: 3rem;
+    margin-right: 1rem;
   }
   &-text {
     font-size: 1.6rem;
+    margin: 0;
+    &-done {
+      text-decoration-line: line-through;
+    }
   }
 }

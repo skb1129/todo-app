@@ -1,4 +1,29 @@
 .todo_list {
   &-wrapper {
+    max-height: 100vh;
+    flex: 1 1 auto;
+    overflow-y: scroll;
+  }
+  &-input_wrapper {
+    display: flex;
+    width: 100%;
+    margin: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  &-input {
+    display: block;
+    font-size: 1.6rem;
+    padding: 1rem;
+    margin-right: 1rem;
+    width: 100%;
+    max-width: 25rem;
+  }
+  &-items {
+    display: flex;
+    justify-content: center;
+  }
+  &-button {
+    padding: 1rem;
   }
 }

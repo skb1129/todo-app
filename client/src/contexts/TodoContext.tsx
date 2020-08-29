@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
+
 import { TodoBucket, TodoItem } from "../models";
 import api from "../api";
 
@@ -89,11 +90,17 @@ export function TodoProvider({ children }: Props) {
       try {
         await api.delete("/bucket", { params: { name } });
         setBuckets((prevState) => prevState.filter((bucket) => bucket.name !== name));
+        setTodos((prevState) =>
+          prevState.map((todo) => {
+            if (todo.bucket === name) todo.bucket = null;
+            return todo;
+          })
+        );
       } catch (e) {
         console.log(e);
       }
     },
-    [setBuckets]
+    [setBuckets, setTodos]
   );
 
   return (
