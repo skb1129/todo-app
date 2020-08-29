@@ -3,6 +3,8 @@ from sqlalchemy import Column, Integer, Text, Boolean, String, ForeignKey
 from sqlalchemy.exc import IntegrityError
 from werkzeug.exceptions import BadRequest
 
+from database import config
+
 db = SQLAlchemy()
 
 
@@ -13,7 +15,7 @@ def setup_db(app):
     :param app: Flask app instance
     :return:
     """
-    app.config.from_object('config')
+    app.config.from_object(config)
     db.app = app
     db.init_app(app)
 

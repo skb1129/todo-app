@@ -74,7 +74,7 @@ cd client && yarn build
 * Start the production `gunicorn` server
 ```shell script
 export DATABASE_URL=<DATABASE_URL>
-gunicorn app:app
+gunicorn wsgi:app
 ```
 The application would run at http://localhost:8000/.
 
