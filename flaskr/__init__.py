@@ -74,14 +74,6 @@ def create_app():
         bucket.insert()
         return jsonify(bucket.dictionary()), 201
 
-    @app.route("/api/bucket", methods=["PUT"])
-    def update_bucket():
-        name = request.json.get("name")
-        bucket = TodoBucket.get(name)
-        bucket.name = name if name else bucket.name
-        bucket.update()
-        return jsonify(bucket.dictionary()), 200
-
     @app.route("/api/bucket", methods=["DELETE"])
     def delete_bucket():
         name = request.args.get("name", None)

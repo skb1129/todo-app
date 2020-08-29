@@ -1,5 +1,5 @@
-# Flask React Boilerplate
-This is a template repository for Flask-React Full-Stack projects.
+# To-Do Application
+This is a To-Do and Buckets application.
 
 
 ## Table of Contents
@@ -15,7 +15,7 @@ This is a template repository for Flask-React Full-Stack projects.
 
 
 ## About The Project
-A simple Full-Stack To-Do application that can be used as boilerplate for new projects. 
+A simple Full-Stack To-Do application. 
 
 
 ### Built With
@@ -40,7 +40,7 @@ You need the following prerequisite dependencies to run the project.
 ### Installation 
 * Clone the repo
 ```shell script
-git clone https://github.com/skb1129/flask-react-boilerplate.git
+git clone https://github.com/skb1129/todo-app.git
 ```
 * Install server dependencies
 ```shell script
@@ -64,6 +64,14 @@ cd client && yarn start
 ```
 The client would run at http://localhost:3000/.
 You can access the application at the client URL.
+
+
+### Testing
+Execute the following command to run the unit tests of this application:
+```shell script
+export DATABASE_URL=<TEST_DATABASE_URL>
+python3 -m test.test_flaskr
+``` 
 
 
 ### Production
