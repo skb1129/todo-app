@@ -13,10 +13,6 @@ test.db
 ehthumbs.db
 Thumbs.db
 
-# Client build files
-static/*
-!static/error.html
-
 # Database
 database.sql
 
