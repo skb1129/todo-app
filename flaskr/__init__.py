@@ -12,7 +12,7 @@ def create_app():
     setup_db(app)
 
     # Use this to re-initialize database:
-    db_drop_and_create_all()
+    # db_drop_and_create_all()
 
     @app.errorhandler(404)
     def static_handler(e):
