@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import classNames from "classnames";
 
 import { useTodo } from "../../contexts/TodoContext";
@@ -13,16 +13,19 @@ function Buckets() {
     inputWrapper: "buckets-input_wrapper",
     input: "buckets-input",
     button: "buckets-button",
-    button2: "buckets-button2",
+    buttonLink: "buckets-button-link",
     buttonActive: "buckets-button-active",
+    button2: "buckets-button2",
+    delete: "buckets-delete",
   };
   const [value, setValue] = useState("");
-  const { buckets, addBucket } = useTodo();
+  const { buckets, addBucket, deleteBucket } = useTodo();
   const { search } = useLocation();
+  const history = useHistory();
   const bucketName = useMemo(() => new URLSearchParams(search).get("bucket"), [search]);
 
-  const createTodo = useCallback(() => {
-    addBucket(value);
+  const createTodo = useCallback(async () => {
+    await addBucket(value);
     setValue("");
   }, [value, setValue, addBucket]);
 
@@ -32,6 +35,14 @@ function Buckets() {
       key === 13 && createTodo();
     },
     [createTodo]
+  );
+
+  const removeTodo = useCallback(
+    async (name: string) => {
+      await deleteBucket(name);
+      if (bucketName === name) history.replace("/");
+    },
+    [deleteBucket, bucketName, history]
   );
 
   return (
@@ -51,17 +62,23 @@ function Buckets() {
           Create Bucket
         </button>
       </div>
-      <Link className={classNames(classes.button, bucketName ? "" : classes.buttonActive)} to="/">
-        All
-      </Link>
+      <div className={classNames(classes.button, bucketName ? "" : classes.buttonActive)}>
+        <Link className={classes.buttonLink} to="/">
+          All
+        </Link>
+      </div>
       {buckets.map((bucket) => (
-        <Link
+        <div
           className={classNames(classes.button, bucketName !== bucket.name ? "" : classes.buttonActive)}
           key={bucket.name}
-          to={{ pathname: "/", search: `?bucket=${bucket.name}` }}
         >
-          {bucket.name}
-        </Link>
+          <Link className={classes.buttonLink} to={{ pathname: "/", search: `?bucket=${bucket.name}` }}>
+            {bucket.name}
+          </Link>
+          <button onClick={() => removeTodo(bucket.name)} className={classes.delete}>
+            X
+          </button>
+        </div>
       ))}
     </div>
   );

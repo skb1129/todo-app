@@ -27,19 +27,32 @@
     width: calc(100% - 4rem);
   }
   &-button {
-    display: block;
+    display: flex;
+    justify-content: space-between;
     font-size: 2rem;
-    padding: 1rem;
     margin: 1rem;
-    color: $black;
-    text-decoration-line: none;
     cursor: pointer;
     &-active,
     &:hover {
       background-color: $highlight;
     }
+    &-link {
+      flex: 1 1 auto;
+      text-decoration-line: none;
+      color: $black;
+      padding: 1rem;
+    }
   }
   &-button2 {
     padding: 1rem;
+  }
+  &-delete {
+    font-size: 2rem;
+    background-color: $primary;
+    color: $black;
+    border: none;
+    cursor: pointer;
+    padding: 0 1rem;
+    margin: 1rem;
   }
 }

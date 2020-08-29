@@ -19,8 +19,8 @@ function TodoList() {
   const { search } = useLocation();
   const bucket = useMemo(() => new URLSearchParams(search).get("bucket"), [search]);
 
-  const createTodo = useCallback(() => {
-    addTodo(value, bucket);
+  const createTodo = useCallback(async () => {
+    await addTodo(value, bucket);
     setValue("");
   }, [value, setValue, addTodo, bucket]);
 

@@ -3,15 +3,22 @@
 .todo {
   &-wrapper {
     display: flex;
-    margin: 2rem;
+    margin: 1rem;
     padding: 1rem;
     align-items: center;
     border: 1px solid $primary;
+    justify-content: space-between;
+    min-width: 25rem;
+  }
+  &-flex {
+    display: flex;
+    align-items: center;
   }
   &-check {
     height: 3rem;
     width: 3rem;
     margin-right: 1rem;
+    cursor: pointer;
   }
   &-text {
     font-size: 1.6rem;
@@ -19,5 +26,13 @@
     &-done {
       text-decoration-line: line-through;
     }
+  }
+  &-delete {
+    font-size: 2rem;
+    background-color: transparent;
+    color: $textPrimary;
+    border: none;
+    cursor: pointer;
+    padding: 1rem;
   }
 }

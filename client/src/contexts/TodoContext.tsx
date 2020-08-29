@@ -2,15 +2,16 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 
 import { TodoBucket, TodoItem } from "../models";
 import api from "../api";
+import { useHistory } from "react-router";
 
 interface TodoContextType {
   todos: TodoItem[];
   buckets: TodoBucket[];
-  addTodo?: (description: string, bucket?: string) => void;
-  updateTodo?: (todo: TodoItem) => void;
-  deleteTodo?: (id: number) => void;
-  addBucket?: (name: string) => void;
-  deleteBucket?: (name: string) => void;
+  addTodo?: (description: string, bucket?: string) => Promise<void>;
+  updateTodo?: (todo: TodoItem) => Promise<void>;
+  deleteTodo?: (id: number) => Promise<void>;
+  addBucket?: (name: string) => Promise<void>;
+  deleteBucket?: (name: string) => Promise<void>;
 }
 
 const TodoContext = React.createContext<TodoContextType>({ todos: [], buckets: [] });
