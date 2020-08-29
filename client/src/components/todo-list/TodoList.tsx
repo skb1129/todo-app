@@ -20,6 +20,7 @@ function TodoList() {
   const bucket = useMemo(() => new URLSearchParams(search).get("bucket"), [search]);
 
   const createTodo = useCallback(async () => {
+    if (!value.trim()) return;
     await addTodo(value, bucket);
     setValue("");
   }, [value, setValue, addTodo, bucket]);

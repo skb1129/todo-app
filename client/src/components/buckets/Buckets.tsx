@@ -25,6 +25,7 @@ function Buckets() {
   const bucketName = useMemo(() => new URLSearchParams(search).get("bucket"), [search]);
 
   const createTodo = useCallback(async () => {
+    if (!value.trim()) return;
     await addBucket(value);
     setValue("");
   }, [value, setValue, addBucket]);

@@ -10,14 +10,6 @@ function App() {
     wrapper: "app-wrapper",
   };
 
-  // const onKeyPress = useCallback(
-  //   (event) => {
-  //     const key = event.keyCode || event.which;
-  //     key === 13 && addTodo();
-  //   },
-  //   [addTodo]
-  // );
-
   return (
     <div data-testid="app" className={styles.wrapper}>
       <Buckets />
